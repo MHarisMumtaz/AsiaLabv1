@@ -328,6 +328,9 @@
     $('#testdeptdropdown').change(function () {
 
         var vo = $("#testdeptdropdown").val() == '' ? -1 : $("#testdeptdropdown").val();
+        if (vo == -1) { $("#testcategdeptdropdown").enabled = false; }
+        else{ $("#testcategdeptdropdown").enabled = true; }
+
         //alert(vo);
         $.ajax({
             type: 'GET',
@@ -380,6 +383,58 @@
         }
     });
 
+   
+    window.onload = function () {
+        $("#testCategoryName").attr("disabled", "disabled");
+        $("#testcategdeptdropdown").attr("disabled", "disabled");
+        $("#subcategSee").attr("disabled", "disabled");
+        $('#testCategoryName').css('border-color', 'red');
+        $('#testcategdeptdropdown').css('border-color', 'red');
+        $('#subcategSee').css('border-color', 'red');
+    };
+
+    $('#deptId').change(function () {
+
+        deptid = $('#deptId').val();
+        if (deptid == '') {
+            
+            $("#testCategoryName").attr("disabled", "disabled");
+            $('#testCategoryName').css('border-color', 'red');
+        }
+        else {
+            $("#testCategoryName").removeAttr("disabled");
+            $('#testCategoryName').css('border-color', '');
+        }
+    });
+
+    $('#testdeptdropdown').change(function () {
+
+        deptid = $('#testdeptdropdown').val();
+        if (deptid == '') {
+
+            $("#testcategdeptdropdown").attr("disabled", "disabled");
+            $('#testcategdeptdropdown').css('border-color', 'red');
+        }
+        else {
+            $("#testcategdeptdropdown").removeAttr("disabled");
+            $('#testcategdeptdropdown').css('border-color', '');
+        }
+    });
+    $('#testdeptdropdown3').change(function () {
+
+        deptid = $('#testdeptdropdown3').val();
+        if (deptid == '') {
+
+            $("#subcategSee").attr("disabled", "disabled");
+            $('#subcategSee').css('border-color', 'red');
+        }
+        else {
+            $("#subcategSee").removeAttr("disabled");
+            $('#subcategSee').css('border-color', '');
+        }
+    });
+    
+
         $('#addDepbtn').click(function () {
             //alert("check");
             deptid = $('#deptId').val();
@@ -387,7 +442,7 @@
             testcategoryName = $('#testCategoryName').val();
             IsNewDepartment = $('#IsNewDepartment').is(':checked');
             //Catgorycode =""
-
+           
             var obj = {
                 deptId: deptid,
                 deptName: deptname,
@@ -446,6 +501,7 @@
     $('#testdeptdropdown2').change(function () {
 
         var vo = $("#testdeptdropdown2").val() == '' ? -1 : $("#testdeptdropdown2").val();
+       
         //alert(vo);
         $.ajax({
             type: 'GET',
@@ -470,7 +526,8 @@
 
     $('#testHeadDropDown').change(function () {
 
-        var vo = $("#testHeadDropDown").val();
+        var vo = $("#testHeadDropDown").val() == '' ? -1 : $("#testHeadDropDown").val();
+      
         //alert(vo);
         $.ajax({
             type: 'GET',
@@ -511,6 +568,7 @@
 
         var vo = $("#testdeptdropdown3").val();
         //alert(vo);
+       
         $.ajax({
             type: 'GET',
             url: '/Admin/FillDropdown/',
