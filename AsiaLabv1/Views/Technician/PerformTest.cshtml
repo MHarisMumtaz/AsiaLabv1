@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "PerformTest";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@section Banner
+{
+    <div class="banner">
+
+        <h2>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+            <span>Perform Test</span>
+        </h2>
+    </div>
+}
+
+@*---------Start Side Navigation Menu-----------*@
+
+@section NavMenu
+{
+    <li>
+        <a href="@Url.Action("TechnicianDashboard", "Main")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
+    </li>
+
+    <li><a href="@Url.Action("PerformTest", "Technician")" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i>Perform Test</a></li>
+
+
+
+
+
+}
+@*------------ End Side Navigation Menu----------*@
+
+
+@*------------- Start Main Content Code-------------*@
+
+<div class="grid-form">
+
+    <!----->
+    <!---->
+    <div class="grid-form1">
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="horizontal-form">
+
+                <div class="horz-grid">
+                    <div class="grid-hor">
+                        <h4 id="grid-example-mixed-complete">Perform Test</h4><br />
+                        <h5 id="grid-example-mixed-complete">Patient No. 1008</h5>
+                        <h5 id="grid-example-mixed-complete">Patient Name: Akhtar</h5>
+
+                    </div>
+                    <!---->
+
+                    <div class="row show-grid">
+                        <div class="col-xs-6 col-sm-3">Test Name</div>
+                        <div class="col-md-1">Result</div>
+
+                        <div class="col-xs-6 col-sm-3">Lower Bound</div>
+                        <div class="col-xs-6 col-sm-3">Upper Bound</div>
+                        <div class="col-md-1">Unit</div>
+
+
+                    </div>
+                    <div style="border: 2px; border-style: solid;  color: #d95459; ">
+
+                    </div>
+
+                    <div class="row show-grid">
+                        <div class="col-xs-6 col-sm-3">
+                            Urine
+                            <br />
+                        </div>
+                        <div class="col-md-1"><input type="text" class="form-control" id="focusedinput" placeholder="Result"></div>
+                        <div class="col-xs-6 col-sm-3">20</div>
+                        <div class="col-xs-6 col-sm-3">50</div>
+                        <div class="col-md-1">mg%</div>
+
+
+                    </div>
+                    <div class="row show-grid">
+                        <div class="col-xs-6 col-sm-3">Blood Sugar</div>
+                        <div class="col-md-1"><input type="text" class="form-control" id="focusedinput" placeholder="Result"></div>
+                        <div class="col-xs-6 col-sm-3">120</div>
+                        <div class="col-xs-6 col-sm-3">250</div>
+                        <div class="col-md-1">mg%</div>
+
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="col-sm-2 login-do" style="margin-left:40%">
+                    <label class="hvr-shutter-in-horizontal login-sub">
+                        <input type="submit" value="Submit" onclick="window.location='signup.html';" />
+                    </label>
+                </div>
+
+
+                <div class="clearfix"> </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<br /><br /><br />
+
+<!--//grid-->
+@*------------- End Main Content Code-------------*@
+

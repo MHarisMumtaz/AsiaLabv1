@@ -1,0 +1,96 @@
+﻿@model AsiaLabv1.UserEmployee
+
+@{
+    ViewBag.Title = "EditProfile";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";    
+  
+}
+
+
+@*---------Start Side Navigation Menu-----------*@
+
+@section NavMenu
+{
+    
+    <li>
+        <a href="@Url.Action("Index","Admin")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
+    </li>
+
+    <li class="active">
+        <a href="@Url.Action("TestsManagement","Admin")" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Tests Management</span></a>
+
+    </li>
+    <li>
+        <a href="@Url.Action("Masters", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Masters</span></a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("Accounting", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-th nav_icon"></i> <span class="nav-label">Accounting</span> </a>
+    </li>
+
+    <li>
+    <li>
+        <a href="@Url.Action("BranchReport", "Admin")" class=" hvr-bounce-to-right"> <i class="fa fa-area-chart nav_icon"></i>Branch Report</a>
+    </li>
+    <li>
+        <a href="@Url.Action("Register","Admin")" class=" hvr-bounce-to-right"> <i class="fa fa-area-chart nav_icon"></i>Register Employee</a>
+    </li>
+}
+@*------------ End Side Navigation Menu----------*@
+
+
+@*------------- Start Main Content Code-------------*@
+
+
+<div class=" profile">
+
+    <div class="profile-bottom">
+        <h3><i class="fa fa-user"></i>Profile</h3>
+        <div class="profile-bottom-top">
+            <div class="col-md-4 profile-bottom-img">
+                <img src="~/images/rsz_1rsz_images.jpg" alt="">
+            </div>
+            <div class="col-md-8 profile-text">
+                <h6>Jack</h6>
+                <table>
+                    <tr>
+                        <td>Department</td>
+                        <td>:</td>
+                        <td>Web Designer</td>
+                    </tr>
+
+                    <tr>
+                        <td>Email</td>
+                        <td> :</td>
+                        <td><a href="info@gmail.com">info@lorem.com</a></td>
+                    </tr>
+                    <tr>
+                        <td>Skills</td>
+                        <td> :</td>
+                        <td> HTML, CSS,Jqury, Bootstrap</td>
+                    </tr>
+                    <tr>
+                        <td>Country </td>
+                        <td>:</td>
+                        <td> United Arab Emirates</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="profile-bottom-bottom">
+            
+        </div>
+        <div class="profile-btn">
+            
+            <button type="button" style="float:right"  href="#" class="btn btn-danger">Save changes</button>
+           
+            <button style="float:right; margin-right:10px" type="button" href="#" class="btn btn-danger">Edit</button>
+            <div class="clearfix"></div>
+            
+        </div>
+
+
+    </div>
+</div>
+@*------------- End Main Content Code-------------*@

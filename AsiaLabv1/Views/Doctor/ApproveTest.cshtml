@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "ApproveTest";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@section Banner
+{
+    <div class="banner">
+
+        <h2>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+            <span>Approve Test</span>
+        </h2>
+    </div>
+}
+
+@*---------Start Side Navigation Menu-----------*@
+
+@section NavMenu
+{
+    <li>
+        <a href="@Url.Action("DoctorDashboard","Main")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
+    </li>
+
+    <li><a href="@Url.Action("ApproveTest","Doctor")" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i>Approve Test</a></li>
+
+
+}
+@*------------ End Side Navigation Menu----------*@
+
+
+@*------------- Start Main Content Code-------------*@
+
+<!--grid-->
+<div class="grid-form">
+
+    <!----->
+    <!---->
+    <div class="grid-form1">
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="horizontal-form">
+                <form>
+                    <div class="horz-grid">
+                        <div class="grid-hor">
+                            <h4 id="grid-example-mixed-complete">Approve Test</h4><br />
+                            <h5 id="grid-example-mixed-complete">Patient No. 1008</h5>
+                            <h5 id="grid-example-mixed-complete">Patient Name: Akhtar</h5>
+
+                        </div>
+                        <!---->
+
+                        <div class="row show-grid">
+                            <div class="col-xs-6 col-sm-3">Test Name</div>
+                            <div class="col-md-1">Result</div>
+
+                            <div class="col-xs-6 col-sm-3">Lower Bound</div>
+                            <div class="col-xs-6 col-sm-3">Upper Bound</div>
+                            <div class="col-md-1">Unit</div>
+
+
+                        </div>
+                        <div style="border: 2px; border-style: solid;  color: #d95459; ">
+
+                        </div>
+
+                        <div class="row show-grid">
+                            <div class="col-xs-6 col-sm-3">
+                                Urine
+                                <br />
+                            </div>
+                            <div style="color:red" class="col-md-1">7.0</div>
+                            <div class="col-xs-6 col-sm-3">2.5</div>
+                            <div class="col-xs-6 col-sm-3">6.0</div>
+                            <div class="col-md-1">mg%</div>
+
+
+                        </div>
+                        <div class="row show-grid">
+                            <div class="col-xs-6 col-sm-3">Blood Sugar</div>
+                            <div class="col-md-1" s>150</div>
+                            <div class="col-xs-6 col-sm-3">120</div>
+                            <div class="col-xs-6 col-sm-3">250</div>
+                            <div class="col-md-1">mg%</div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <br /><br />
+
+                    <div class="form-group">
+                        <h4 id="grid-example-mixed-complete">Doctor's Comments</h4><br />
+                        <div class="col-sm-8"><textarea name="txtarea1" id="txtarea1" cols="50" rows="4" class="form-control1"></textarea></div>
+                        <div class="col-sm-2 login-do">
+                            <label class="hvr-shutter-in-horizontal login-sub">
+                                <input type="submit" value="Import Template" />
+                            </label>
+                        </div>
+
+                    </div>
+
+
+                    <br /><br />
+                    <div class="col-sm-2 login-do" style="margin-left:50%">
+                        <label class="hvr-shutter-in-horizontal login-sub">
+                            <input type="submit" value="Approved" />
+                        </label>
+                    </div>
+                    <div class="clearfix"> </div>
+                </form>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<br /><br /><br />
+
+
+
+
+            </div>
+        </div>
+<!--//grid-->
+<!---->
+<!--//content-->
+<!---->
+<!----->
+<!--//content-->
+@*------------- End Main Content Code-------------*@

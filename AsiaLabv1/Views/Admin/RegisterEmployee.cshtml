@@ -1,0 +1,334 @@
+﻿@{
+    ViewBag.Title = "RegisterEmployee";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+@model AsiaLabv1.Models.UserModel
+@section Banner
+{
+    <div class="banner">
+
+        <h2>
+            <a href="index.html">Home</a>
+            <i class="fa fa-angle-right"></i>
+            <span>Admin Dashboard</span>
+        </h2>
+    </div>
+}
+
+@*---------Start Side Navigation Menu-----------*@
+
+@section NavMenu
+{
+    <li>
+        <a href="@Url.Action("AdminDashboard","Main")" class=" hvr-bounce-to-right"><i class="fa fa-dashboard nav_icon "></i><span class="nav-label">Dashboard</span> </a>
+    </li>
+
+    <li>
+        <a href="@Url.Action("TestsManagement", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-indent nav_icon"></i> <span class="nav-label">Tests Management</span></a>
+
+    </li>
+    <li>
+        <a href="@Url.Action("DoctorReferrals", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Doctor Referrals</span></a>
+    </li>
+    <li>
+        <a href="@Url.Action("Register","Admin")" class=" hvr-bounce-to-right"> <i class="fa fa-indent nav_icon"></i>Employee Management</a>
+    </li>
+
+
+    <li>
+        <a href="@Url.Action("Accounting", "Admin")" class=" hvr-bounce-to-right"><i class="fa fa-th nav_icon"></i> <span class="nav-label">Accounting</span> </a>
+    </li>
+
+    <li>
+    <li>
+        <a href="@Url.Action("BranchReport", "Admin")" class=" hvr-bounce-to-right"> <i class="fa fa-area-chart nav_icon"></i>Branch Report</a>
+    </li>
+
+}
+<div class="typo-grid">
+
+    <div class="typo-1">
+
+
+        <div class="grid_3 grid_5">
+            <h3 class="head-top">Employee Management Options</h3>
+            <div class="but_list">
+                <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Register Employee</a></li>
+                        <li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile">Manage Employees</a></li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="home" aria-labelledby="home-tab">
+                            <div class="grid-form1">
+
+                                <div class="tab-content">
+
+                                    <div class="tab-pane active" id="horizontal-form">
+
+                                        @using (Html.BeginForm("RegisterUser", "Admin", FormMethod.Post, new { id = "EmpRegistrationForm", @class = "form-horizontal" }))
+                                        {
+                                            <br />
+                                            <div class="form-group">
+                                                <label for="pname" class="col-sm-2 control-label">Branch</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(model => model.BranchId, Model.Branches, new { @class = "form-control1", id = "testdeptdropdown" })
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="checkbox" class="col-sm-2 control-label">User Type</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(model => model.UserTypeId, Model.UserTypes, new { @class = "form-control1", id = "testdeptdropdown" })
+
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pname" class="col-sm-2 control-label">Name</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control1" })
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="checkbox" class="col-sm-2 control-label">Gender</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(model => model.GenderId, Model.Genders, new { @class = "form-control1", id = "testdeptdropdown" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="pname" class="col-sm-2 control-label">Username</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control1" })
+
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pname" class="col-sm-2 control-label">Password</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.Password, new { @class = "form-control1", })
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pname" class="col-sm-2 control-label">Email</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control1" })
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pname" class="col-sm-2 control-label">Contact no.</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control1" })
+                                                </div>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="pname" class="col-sm-2 control-label">CNIC</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.CNIC, new { @class = "form-control1" })
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <label for="pname" class="col-sm-2 control-label">Address Details</label>
+                                                <div class="col-sm-8">
+
+                                                    @Html.TextBoxFor(model => model.AddressDetails, new { @class = "form-control1" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+
+                                                <label for="pname" id="q1" class="col-sm-2 control-label">Qualification</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.Qualification, new { @class = "form-control1" })
+                                                </div>
+
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+
+                                                <div class="col-sm-8" style="margin-left:26%">
+                                                    <button type="submit" id="formsubmitbtn" class="btn btn-danger">Submit</button>
+
+                                                </div>
+
+                                            </div>
+
+
+                                            <div class="clearfix"> </div>
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
+                            <div class="grid-form1">
+                                @*----------------------------------------------------------------------------------------------------------------------------------*@
+                                @*<h3>Add New Tests</h3>*@
+                                <div class="tab-content">
+
+                                    <div class="tab-pane active" id="horizontal-form">
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="grid-form">
+
+    <!----->
+    <!---->
+    <div class="grid-form1">
+        <h3>Register Employees</h3>
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="horizontal-form">*@
+
+
+@*@using (Html.BeginForm("RegisterUser", "Admin", FormMethod.Post, new { id = "EmpRegistrationForm", @class = "form-horizontal" }))
+    {
+        <br />
+        <div class="form-group">
+            <label for="pname" class="col-sm-2 control-label">Branch</label>
+            <div class="col-sm-8">
+                @Html.DropDownListFor(model => model.BranchId, Model.Branches, new { @class = "form-control1", id = "testdeptdropdown" })
+            </div>
+            <!--<div class="col-sm-2">
+                <p class="help-block">Your help text!</p>
+            </div>-->
+        </div>
+        <div class="form-group">
+            <label for="checkbox" class="col-sm-2 control-label">User Type</label>
+            <div class="col-sm-8">
+                @Html.DropDownListFor(model => model.UserTypeId, Model.UserTypes, new { @class = "form-control1", id = "testdeptdropdown" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="pname" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control1" })
+            </div>
+            <!--<div class="col-sm-2">
+                <p class="help-block">Your help text!</p>
+            </div>-->
+        </div>
+        <div class="form-group">
+            <label for="checkbox" class="col-sm-2 control-label">Gender</label>
+            <div class="col-sm-8">
+                @Html.DropDownListFor(model => model.GenderId, Model.Genders, new { @class = "form-control1", id = "testdeptdropdown" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="pname" class="col-sm-2 control-label">Username</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control1" })
+
+            </div>
+            <!--<div class="col-sm-2">
+                <p class="help-block">Your help text!</p>
+            </div>-->
+        </div>
+        <div class="form-group">
+            <label for="pname" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.Password, new { @class = "form-control1", })
+            </div>
+            <!--<div class="col-sm-2">
+                <p class="help-block">Your help text!</p>
+            </div>-->
+        </div>
+        <div class="form-group">
+            <label for="pname" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control1" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="pname" class="col-sm-2 control-label">Contact no.</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.ContactNo, new { @class = "form-control1" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            <label for="pname" class="col-sm-2 control-label">CNIC</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.CNIC, new { @class = "form-control1" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group">
+            <label for="pname" class="col-sm-2 control-label">Address Details</label>
+            <div class="col-sm-8">
+
+                @Html.TextBoxFor(model => model.AddressDetails, new { @class = "form-control1" })
+            </div>
+        </div>
+        <div class="form-group">
+
+            <label for="pname" id="q1" class="col-sm-2 control-label">Qualification</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(model => model.Qualification, new { @class = "form-control1" })
+            </div>
+
+        </div>
+        <br />
+        <div class="form-group">
+
+            <div class="col-sm-8" style="margin-left:26%">
+                <button type="submit" id="formsubmitbtn" class="btn btn-danger">Submit</button>
+
+            </div>
+
+        </div>
+
+
+        <div class="clearfix"> </div>
+
+    }*@
+<script>
+    $(document).ready(function () {
+        $("#formsubmitbtn").click(function () {
+            var formsub = function () {
+                var qual = $("#Qualification").val();
+                if (qual == "") {
+                    $("#q1").append = "Qualification Required";
+                }
+                else {
+                    $("#EmpRegistrationForm").submit();
+                }
+            }
+        });
+    });
+
+</script>
+@*</div>
+            </div>
+        </div>
+    </div>*@
+<br /><br /><br />
