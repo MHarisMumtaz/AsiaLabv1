@@ -104,7 +104,7 @@
                         <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
                             <div class="grid-form1">
                                 @*----------------------------------------------------------------------------------------------------------------------------------*@
-                                @*<h3>Add New Tests</h3>*@
+                                
                                 <div class="tab-content">
 
                                     <div class="tab-pane active" id="horizontal-form">
@@ -113,16 +113,17 @@
                                             <br />
 
                                             <div class="form-group">
-                                                @Html.LabelFor(model => model.ReferredDoctorName, new {  @for="focusedinput", @class="col-sm-2 control-label"})
+                                                @*@Html.LabelFor(model => model.ReferredDoctorName, new {  @for="focusedinput", @class="col-sm-2 control-label"})*@
+                                                <label for="selector1" class="col-sm-2 control-label">Doctor Name</label>
                                                 <div class="col-sm-8">
-                                                    @Html.EditorFor(model => model.ReferredDoctorName, new { @class = "form-control1" })
+                                                    @Html.TextBoxFor(model => model.ReferredDoctorName, new { @class = "form-control1" })
                                                 </div>
 
                                             </div>
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.ReferredDocAddress, new { @for = "focusedinput", @class = "col-sm-2 control-label" })
                                                 <div class="col-sm-8">
-                                                    @Html.EditorFor(model => model.ReferredDocAddress, new { @class = "form-control1" })
+                                                    @Html.TextBoxFor(model => model.ReferredDocAddress, new { @class = "form-control1" })
                                                 </div>
 
                                             </div>
@@ -130,7 +131,7 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.ReferredDocNumber, new { @for = "focusedinput", @class = "col-sm-2 control-label" })
                                                 <div class="col-sm-8">
-                                                    @Html.EditorFor(model => model.ReferredDocNumber, new { @class = "form-control1" })
+                                                    @Html.TextBoxFor(model => model.ReferredDocNumber, new { @class = "form-control1" })
                                                 </div>
 
                                             </div>
@@ -138,20 +139,20 @@
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.Remarks, new { @for = "focusedinput", @class = "col-sm-2 control-label" })
                                                 <div class="col-sm-8">
-                                                    @Html.EditorFor(model => model.Remarks, new { @class = "form-control1" })
+                                                    @Html.TextBoxFor(model => model.Remarks, new { @class = "form-control1" })
                                                 </div>
 
                                             </div>
                                             <div class="form-group">
                                                 @Html.LabelFor(model => model.commission, new { @for = "focusedinput", @class = "col-sm-2 control-label" })
                                                 <div class="col-sm-8">
-                                                    @Html.EditorFor(model => model.commission, new { @class = "form-control1" })
+                                                    @Html.TextBoxFor(model => model.commission, new { @class = "form-control1" })
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <div class="col-sm-8" style="margin-left:26%">
-                                                    <button id="addTestbtn" type="submit" class="btn btn-danger">Add Referral
+                                                    <button id="addTestbtn" type="submit" class="btn btn-danger">Add
                                                     </button>
                                                 </div>
                                             </div>

@@ -129,7 +129,7 @@ namespace AsiaLabv1.Controllers
                         TestSubcategoryId = TestId
                     });
                 }
-                return Json("SuccessFully Added Patient", JsonRequestBehavior.AllowGet);
+                return Json("Patient Added Successfully!", JsonRequestBehavior.AllowGet);
             }
             return Json("Please assign tests for patients", JsonRequestBehavior.AllowGet);
             
