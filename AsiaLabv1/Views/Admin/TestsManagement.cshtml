@@ -92,7 +92,7 @@
                                             <div class="form-group">
                                                 <label for="selector1" id="lbl" class="col-sm-2 control-label">Select Department</label>
                                                 <div class="col-sm-8">
-                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, new { @class = "form-control1" })
+                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, "Select Department", new { @class = "form-control1" })
 
                                                 </div>
                                             </div>
@@ -118,7 +118,7 @@
                                             <div class="form-group">
 
                                                 <div class="col-sm-8" style="margin-left:26%">
-                                                    <button id="addDepbtn" type="submit" class="btn btn-danger">Add</button>
+                                                    <button id="addDepbtn" type="button" class="btn btn-danger">Add</button>
 
                                                 </div>
 
@@ -143,7 +143,7 @@
                                             <div class="form-group">
                                                 <label for="selector1" class="col-sm-2 control-label">Select Department</label>
                                                 <div class="col-sm-8">
-                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, new { @class = "form-control1", id = "testdeptdropdown" })
+                                                    @Html.DropDownListFor(model => model.deptId, Model.departments,  "Select Department", new { @class = "form-control1", id = "testdeptdropdown" })
 
                                                 </div>
                                             </div>
@@ -152,9 +152,7 @@
                                                 <label for="selector1" class="col-sm-2 control-label">Select Sub-Department</label>
                                                 <div class="col-sm-8">
 
-                                                    <select name="selector1" id="testcategdeptdropdown" class="form-control1">
-                                                        Select Test Category
-                                                    </select>
+                                                    <select name="selector1" id="testcategdeptdropdown" class="form-control1">  </select>
 
 
                                                 </div>
@@ -199,7 +197,7 @@
                                             <div class="form-group">
 
                                                 <div class="col-sm-8" style="margin-left:26%">
-                                                    <button id="addTestbtn" class="btn btn-danger">Add</button>
+                                                    <button id="addTestbtn" type="button" class="btn btn-danger">Add</button>
 
                                                 </div>
 
@@ -280,7 +278,7 @@
                                             <div class="form-group">
                                                 <label for="selector1" class="col-sm-2 control-label">Select Department</label>
                                                 <div class="col-sm-8">
-                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, new { @class = "form-control1", id = "testdeptdropdown3" })
+                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, "Select Department", new { @class = "form-control1", id = "testdeptdropdown3" })
                                                 </div>
                                             </div>
 
@@ -321,6 +319,10 @@
 </div>
 
 <script type="text/javascript">
+
+  
+
+
     $("#labeldeptname").hide();
 
     $('#testdeptdropdown').change(function () {
@@ -335,7 +337,7 @@
             success: function (data) {
 
                 $('#testcategdeptdropdown').html('');
-
+                $("#testcategdeptdropdown").prepend("<option value='-1' selected='selected'>Select Sub Department</option>");
 
                 for (var i = 0; i < 10; i++) {
 
@@ -384,26 +386,51 @@
             deptname = $('#deptName').val();
             testcategoryName = $('#testCategoryName').val();
             IsNewDepartment = $('#IsNewDepartment').is(':checked');
-            Catgorycode =""
+            //Catgorycode =""
 
             var obj = {
-                deptId: parseInt(deptid),
+                deptId:deptid,
                 deptName: deptname,
                 testCategoryName: testcategoryName,
                 IsNewDepartment: IsNewDepartment,
                 testCategoryId: -1,
-                CatgoryCode: Catgorycode
+                //CatgoryCode: Catgorycode
             };
             //alert(obj);
             $.ajax({
                 type: 'POST',
-                url: "@Url.Action("AddTestDepartmentsAndCategories","Admin")",
-                contentType: "application/json; charset-utf-8",
-                data:  {model : obj},
-                dataType: "json"
+                url: '/Admin/AddTestDepartmentsAndCategories/',
+                //contentType: "application/json; charset-utf-8",
+                data: obj,
+                dataType: "json",
 
             });
-    $.ajax({
+
+    });
+
+    //Adding Tests
+
+    $('#addTestbtn').click(function () {
+
+        deptid = $('#deptId').val();
+        TestCategoryId = $('#testcategdeptdropdown').val();
+        TestSubcategoryName = $('#testName').val();
+        UpperBound = $('#upperBound').val();
+        LowerBound = $('#lowerBound').val();
+        Unit = $('#unit').val();
+        Rate = $('#rate').val();
+
+        var obj = {
+            deptId: deptid,
+            TestCategoryId: TestCategoryId,
+            TestSubcategoryName: TestSubcategoryName,
+            upperBound: UpperBound,
+            lowerBound: LowerBound,
+            Unit: Unit,
+            Rate: Rate
+        };
+
+        $.ajax({
 
             type: 'POST',
             url: '/Admin/AddTests/',
@@ -412,7 +439,6 @@
 
         });
     });
-
 
 
     //For Deleting Tests
@@ -429,7 +455,7 @@
             success: function (data) {
 
                 $('#testHeadDropDown').html('');
-
+                $("#testHeadDropDown").prepend("<option value='-1' selected='selected'>Select Category</option>");
                 for (var i = 0; i < 10; i++) {
                     $('#testHeadDropDown').append($("<option></option>").attr("value", data[i].Id).text(data[i].testName));
                 }
@@ -454,7 +480,7 @@
             success: function (data) {
 
                 $('#testDropDown').html('');
-
+                $("#testDropDown").prepend("<option value='-1' selected='selected'>Select Category</option>");
                 for (var i = 0; i < 10; i++) {
                     $('#testDropDown').append($("<option></option>").attr("value", data[i].Id).text(data[i].testName));
                 }
@@ -496,10 +522,9 @@
                 $("#subcategSee").prepend("<option value='-1' selected='selected'>Select Test Category</option>");
                 for (var i = 0; i < data.length; i++) {
                     $('#subcategSee').append($("<option></option>").attr("value", data[i].Id).text(data[i].testName));
-                },
-                error: function (data) {
-                    alert(data);
-            }
+                }
+            },
+                error: function (data) {alert(data);}
         });
     });
 
@@ -531,13 +556,9 @@
 
     //Kendo Grid For Test Viewing
 
-        setInterval(alertFunc, 3000);
-
-
     $('#subcategSee').change(function () {
 
 
-        //('#grid').data('kendoGrid').refresh();
         var vo = $("#subcategSee").val();
         alert(vo);
 
@@ -551,59 +572,64 @@
         });
 
 
-                var crudServiceBaseUrl = "/Admin",
-                  dataSource = new kendo.data.DataSource({
-                      transport: {
-                          read: {
-                              url: crudServiceBaseUrl + "/FillDropdownKendo",
-                              dataType: "json",
 
-                          },
-                          update: {
-                              url: crudServiceBaseUrl + "/UpdateKendoGrid",
-                              dataType: "json",
 
-                          },
-                          destroy: {
-                              url: crudServiceBaseUrl + "/Delete",
-                              dataType: "json",
-                          },
+        var crudServiceBaseUrl = "/Admin",
+                dataSource = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: crudServiceBaseUrl + "/FillDropdownKendo",
+                            dataType: "json",
 
-                          parameterMap: function (options, operation) {
+                        },
+                        update: {
+                            url: crudServiceBaseUrl + "/UpdateKendoGrid",
+                            dataType: "json",
 
-                              if (operation !== "read" && options.models) {
-                                  return { models: kendo.stringify(options.models) };
-                              }
-                          },
-                      },
-    
-                      batch: true,
-                      pageSize: 20,
-                      schema: {
-                          model: {
-                              id: "Id",
-                              fields: {
-                                  testName: { type: "string" },
-                                  upperBound: { type: "double" },
-                                  lowerBound: { type: "double" },
-                                  unit: { type: "string" },
-                                  rate: { type: "double" },
+                        },
+                        destroy: {
+                            url: crudServiceBaseUrl + "/Delete",
+                            dataType: "json",
+                        },
 
-                              }
-                          completed: function () { //alert('COmpleted');
-                          },
-                          requestEnd: function (e) {
-                              //$('#grid').data('kendoGrid').dataSource.read();
-                              $('#grid').data('kendoGrid').refresh();
-                          }
-                      });
+                        parameterMap: function (options, operation) {
+
+                            if (operation !== "read" && options.models) {
+                                return { models: kendo.stringify(options.models) };
+                            }
+                        },
+
+                    },
+                    batch: true,
+                    pageSize: 20,
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                testName: { type: "string" },
+                                upperBound: { type: "double" },
+                                lowerBound: { type: "double" },
+                                unit: { type: "string" },
+                                rate: { type: "double" },
+
+                            }
+                        }
+                    },
+                    completed: function () { //alert('COmpleted');
+                    },
+                    requestEnd: function (e) {
+                        //$('#grid').data('kendoGrid').dataSource.read();
+                        $('#grid').data('kendoGrid').refresh();
+                    },
+
+                });
 
         $("#grid").kendoGrid({
             dataSource: dataSource,
             pageable: true,
             height: 550,
 
-            change: onChange,
+            //change: onChange,
             //toolbar: ["create"],
             columns: [
 
@@ -616,11 +642,9 @@
             ],
             editable: "inline"
         });
+
     });
 
-    function onChange() {
-        alert('aala');
-    }
 
 </script>
 
