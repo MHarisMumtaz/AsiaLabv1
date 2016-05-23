@@ -327,7 +327,7 @@
 
     $('#testdeptdropdown').change(function () {
 
-        var vo = $("#testdeptdropdown").val();
+        var vo = $("#testdeptdropdown").val() == '' ? -1 : $("#testdeptdropdown").val();
         //alert(vo);
         $.ajax({
             type: 'GET',
@@ -389,7 +389,7 @@
             //Catgorycode =""
 
             var obj = {
-                deptId:deptid,
+                deptId: deptid,
                 deptName: deptname,
                 testCategoryName: testcategoryName,
                 IsNewDepartment: IsNewDepartment,
@@ -445,7 +445,7 @@
 
     $('#testdeptdropdown2').change(function () {
 
-        var vo = $("#testdeptdropdown2").val();
+        var vo = $("#testdeptdropdown2").val() == '' ? -1 : $("#testdeptdropdown2").val();
         //alert(vo);
         $.ajax({
             type: 'GET',
@@ -510,7 +510,7 @@
     $('#testdeptdropdown3').change(function () {
 
         var vo = $("#testdeptdropdown3").val();
-        alert(vo);
+        //alert(vo);
         $.ajax({
             type: 'GET',
             url: '/Admin/FillDropdown/',
@@ -560,7 +560,7 @@
 
 
         var vo = $("#subcategSee").val();
-        alert(vo);
+        //alert(vo);
 
 
         $.ajax({
