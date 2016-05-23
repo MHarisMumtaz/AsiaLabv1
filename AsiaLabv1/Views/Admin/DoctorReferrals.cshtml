@@ -104,9 +104,15 @@
                         <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
                             <div class="grid-form1">
                                 @*----------------------------------------------------------------------------------------------------------------------------------*@
-                                
-                                <div class="tab-content">
 
+                                <div class="tab-content">
+                                    <div id="myDiv" class='alert alert-success fade in' style='text-align:center;
+
+width:60%; height:20%; margin:auto; padding:10px'>
+                                        <img src='~/images/rsz_success.png'
+                                             style='margin-bottom:2px; margin-right:5px' /> Record Added Successfully!
+
+                                    </div>
                                     <div class="tab-pane active" id="horizontal-form">
                                         @using (Html.BeginForm("AddReferDoctor", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
                                         {
@@ -152,7 +158,8 @@
 
                                             <div class="form-group">
                                                 <div class="col-sm-8" style="margin-left:26%">
-                                                    <button id="addTestbtn" type="submit" class="btn btn-danger">Add
+                                                    <button id="addTestbtn" type="submit" class="btn btn-danger">
+                                                        Add
                                                     </button>
                                                 </div>
                                             </div>
