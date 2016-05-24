@@ -65,7 +65,13 @@
                                 <div class="tab-content">
 
                                     <div class="tab-pane active" id="horizontal-form">
+                                        <div id="myDiv" class='alert alert-success fade in' style='text-align:center;
 
+width:60%; height:20%; margin:auto; padding:10px'>
+                                            <img src='~/images/rsz_success.png'
+                                                 style='margin-bottom:2px; margin-right:5px' /> Employee Added Successfully!
+
+                                        </div>
                                         @using (Html.BeginForm("RegisterUser", "Admin", FormMethod.Post, new { id = "EmpRegistrationForm", @class = "form-horizontal" }))
                                         {
                                             <br />
@@ -312,6 +318,7 @@
 
     }*@
 <script>
+    $('#myDiv').hide();
     $(document).ready(function () {
         $("#formsubmitbtn").click(function () {
             var formsub = function () {
@@ -321,6 +328,8 @@
                 }
                 else {
                     $("#EmpRegistrationForm").submit();
+                    $('#myDiv').fadeIn("fast");
+                    $('#myDiv').fadeOut(5000);
                 }
             }
         });

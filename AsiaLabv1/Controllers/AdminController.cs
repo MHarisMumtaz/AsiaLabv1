@@ -303,7 +303,7 @@ namespace AsiaLabv1.Controllers
                 Remarks = model.Remarks,
                 commission = model.commission
             });
-            return new JsonResult();
+            return new JsonResult();            
         }
 
         #endregion

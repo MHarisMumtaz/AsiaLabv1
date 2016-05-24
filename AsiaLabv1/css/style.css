@@ -1139,7 +1139,8 @@ i.fa.fa-twitter {
 
 }
 .row.show-grid {
-    margin: 1em 0;
+    margin: 3px 0;
+
 }
 .show-grid [class^=col-] {
     padding-top: 10px;
