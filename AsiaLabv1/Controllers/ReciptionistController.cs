@@ -133,7 +133,6 @@ namespace AsiaLabv1.Controllers
             //    Description = "Cash"
             //});
             #endregion
-
             #region testing code should be delete
             //var model=new PatientModel(){
             //    BranchId=1,
@@ -168,7 +167,7 @@ namespace AsiaLabv1.Controllers
                 {
                     netAmount = netAmount - model.Discount;
                 }
-                
+
                 PatientPaymentServices.Add(new Payment
                 {
                     PatientId = model.Id,

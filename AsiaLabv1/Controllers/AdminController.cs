@@ -124,7 +124,7 @@ namespace AsiaLabv1.Controllers
 
             return View("TestsManagement", tManagementModel);
         }
-    
+
         public ActionResult AddTestDepartmentsAndCategories(TestManagementModel model)
         {
             if (model.IsNewDepartment)
@@ -303,7 +303,7 @@ namespace AsiaLabv1.Controllers
                 Remarks = model.Remarks,
                 commission = model.commission
             });
-            return new JsonResult();
+            return new JsonResult();            
         }
 
         #endregion

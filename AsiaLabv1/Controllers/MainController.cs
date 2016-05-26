@@ -30,6 +30,22 @@ namespace AsiaLabv1.Controllers
             return View();
         }
 
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }
+        public ActionResult DoctorDashboard()
+        {
+            return View();
+        }
+        public ActionResult ReceptionistDashboard()
+        {
+            return View();
+        }
+        public ActionResult TechnicianDashboard()
+        {
+            return View();
+        }
         [HttpPost]
         public ActionResult Login(FormCollection LoginForm)
         {

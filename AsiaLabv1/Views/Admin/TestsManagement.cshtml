@@ -75,7 +75,10 @@
                                 <div class="tab-content">
 
                                     <div class="tab-pane active" id="horizontal-form">
+                                        <div id="myDiv" class='alert alert-success fade in' style='text-align:center; width:60%; height:20%; margin:auto; padding:10px'>
+                                            <img src='~/images/rsz_success.png' style='margin-bottom:2px; margin-right:5px' /> Record Added Successfully!
 
+                                        </div>
                                         <form class="form-horizontal">
 
                                             <br />
@@ -92,8 +95,9 @@
                                             <div class="form-group">
                                                 <label for="selector1" id="lbl" class="col-sm-2 control-label">Select Department</label>
                                                 <div class="col-sm-8">
-                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, new { @class = "form-control1" })
-
+                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, "Select Department", new { @class = "form-control1" })
+                                                   
+                                                    <label id="deptidd" style="color:red">Please Select Department Name</label>
                                                 </div>
                                             </div>
 
@@ -101,7 +105,8 @@
                                                 <label for="focusedinput" id="deptlbl" class="col-sm-2 control-label">Department Name</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(model => model.deptName, new { @class = "form-control1" })
-
+                                                    
+                                                    <label id="deptname" style="color:red">Please Enter Department Name</label>
                                                 </div>
 
                                             </div>
@@ -110,7 +115,8 @@
                                                 <label for="focusedinput" id="subdep" class="col-sm-2 control-label">Sub-Department Name</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(model => model.testCategoryName, new { @class = "form-control1" })
-
+                                                    
+                                                    <label id="subdepart" style="color:red">Please Enter Department Name</label>
                                                 </div>
 
                                             </div>
@@ -118,7 +124,7 @@
                                             <div class="form-group">
 
                                                 <div class="col-sm-8" style="margin-left:26%">
-                                                    <button id="addDepbtn" type="submit" class="btn btn-danger">Add</button>
+                                                    <button id="addDepbtn" type="button" class="btn btn-danger">Add</button>
 
                                                 </div>
 
@@ -137,14 +143,18 @@
                                 <div class="tab-content">
 
                                     <div class="tab-pane active" id="horizontal-form">
+                                        <div id="myDiv2" class='alert alert-success fade in' style='text-align:center; width:60%; height:20%; margin:auto; padding:10px'>
+                                            <img src='~/images/rsz_success.png' style='margin-bottom:2px; margin-right:5px' /> Test Added Successfully!
 
-                                        <form class="form-horizontal">
+                                        </div>
+                                        <form id="testform" class="form-horizontal">
                                             <br />
                                             <div class="form-group">
                                                 <label for="selector1" class="col-sm-2 control-label">Select Department</label>
                                                 <div class="col-sm-8">
-                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, new { @class = "form-control1", id = "testdeptdropdown" })
-
+                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, "Select Department", new { @class = "form-control1", id = "testdeptdropdown" })
+                                                    &nbsp;
+                                                    <label id="seldept" style="color:red">Please Select a Department</label>
                                                 </div>
                                             </div>
 
@@ -152,24 +162,29 @@
                                                 <label for="selector1" class="col-sm-2 control-label">Select Sub-Department</label>
                                                 <div class="col-sm-8">
 
-                                                    <select name="selector1" id="testcategdeptdropdown" class="form-control1">
-                                                        Select Test Category
-                                                    </select>
-
+                                                    <select name="selector1" id="testcategdeptdropdown" class="form-control1">  </select>
+                                                    &nbsp;
+                                                    <label id="selsubdept" style="color:red">Please Select a Sub-Department</label>
 
                                                 </div>
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="focusedinput" class="col-sm-2 control-label">Add New Test Name</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(model => model.testName, new { @class = "form-control1" })
+                                                    &nbsp;
+                                                    <label id="testname" style="color:red">Test Name is Required</label>
                                                 </div>
 
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="focusedinput" class="col-sm-2 control-label">Upper Bound</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(model => model.upperBound, new { @class = "form-control1" })
+                                                    &nbsp;
+                                                    <label id="upbound" style="color:red">Upper Bound is Required</label>
                                                 </div>
 
                                             </div>
@@ -178,20 +193,31 @@
                                                 <label for="focusedinput" class="col-sm-2 control-label">Lower Bound</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(model => model.lowerBound, new { @class = "form-control1" })
+                                                    &nbsp;
+                                                    <label id="lbound" style="color:red">Lower Bound is Required</label>
                                                 </div>
 
                                             </div>
+
                                             <div class="form-group">
                                                 <label for="selector1" class="col-sm-2 control-label">Select Unit</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(model => model.unit, new { @class = "form-control1" })
+                                                    &nbsp;
+                                                    <label id="un" style="color:red">Lower Bound is Required</label>
                                                 </div>
+
+
+
                                             </div>
+
 
                                             <div class="form-group">
                                                 <label for="focusedinput" class="col-sm-2 control-label">Rate</label>
                                                 <div class="col-sm-8">
                                                     @Html.TextBoxFor(model => model.rate, new { @class = "form-control1" })
+                                                    &nbsp;
+                                                    <label id="rat" style="color:red">Rate is Required</label>
                                                 </div>
 
                                             </div>
@@ -199,7 +225,7 @@
                                             <div class="form-group">
 
                                                 <div class="col-sm-8" style="margin-left:26%">
-                                                    <button id="addTestbtn" class="btn btn-danger">Add</button>
+                                                    <button id="addTestbtn" type="button" class="btn btn-danger">Add</button>
 
                                                 </div>
 
@@ -216,56 +242,7 @@
 
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane fade in" id="delete" aria-labelledby="delete">
-                            <div class="grid-form1">
-                                @*<h3>Delete Tests</h3>*@
-                                <div class="tab-content">
 
-                                    <div class="tab-pane active" id="horizontal-form">
-
-                                        <form class="form-horizontal">
-
-
-                                            <br />
-
-                                            <div class="form-group">
-                                                <label for="selector1" class="col-sm-2 control-label">Select Department</label>
-                                                <div class="col-sm-8">
-                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, new { @class = "form-control1", id = "testdeptdropdown2" })
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="selector1" class="col-sm-2 control-label">Select Test Head</label>
-                                                <div class="col-sm-8">
-                                                    <select name="selector1" id="testHeadDropDown" class="form-control1"></select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="focusedinput" class="col-sm-2 control-label">Select Test Name</label>
-                                                <div class="col-sm-8">
-                                                    <select name="selector1" id="testDropDown" class="form-control1"></select>
-                                                </div>
-
-                                            </div>
-                                            <div class="form-group">
-
-                                                <div class="col-sm-8" style="margin-left:26%">
-                                                    <button id="deleteTestbtn" class="btn btn-danger">Delete</button>
-
-                                                </div>
-
-                                            </div>
-
-                                            <div class="clearfix"> </div>
-                                        </form>
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
                         <div role="tabpanel" class="tab-pane fade in" id="see" aria-labelledby="delete">
                             <div class="grid-form1">
                                 @*<h3>See Tests</h3>*@
@@ -280,7 +257,7 @@
                                             <div class="form-group">
                                                 <label for="selector1" class="col-sm-2 control-label">Select Department</label>
                                                 <div class="col-sm-8">
-                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, new { @class = "form-control1", id = "testdeptdropdown3" })
+                                                    @Html.DropDownListFor(model => model.deptId, Model.departments, "Select Department", new { @class = "form-control1", id = "testdeptdropdown3" })
                                                 </div>
                                             </div>
 
@@ -321,11 +298,29 @@
 </div>
 
 <script type="text/javascript">
+
+    $('#myDiv').hide();
+    $('#myDiv2').hide();
     $("#labeldeptname").hide();
+
+    $('#seldept').hide();
+    $('#selsubdept').hide();
+    $('#testname').hide();
+    $('#upbound').hide();
+    $('#lbound').hide();
+    $('#rat').hide();
+    $('#un').hide();
+
+    $('#deptname').hide();
+    $('#subdepart').hide();
+    $('#deptidd').hide();
 
     $('#testdeptdropdown').change(function () {
 
-        var vo = $("#testdeptdropdown").val();
+        var vo = $("#testdeptdropdown").val() == '' ? -1 : $("#testdeptdropdown").val();
+        if (vo == -1) { $("#testcategdeptdropdown").enabled = false; }
+        else { $("#testcategdeptdropdown").enabled = true; }
+
         //alert(vo);
         $.ajax({
             type: 'GET',
@@ -335,7 +330,7 @@
             success: function (data) {
 
                 $('#testcategdeptdropdown').html('');
-
+                $("#testcategdeptdropdown").prepend("<option value='-1' selected='selected'>Select Sub Department</option>");
 
                 for (var i = 0; i < 10; i++) {
 
@@ -378,48 +373,140 @@
         }
     });
 
-        $('#addDepbtn').click(function () {
-            //alert("check");
-            deptid = $('#deptId').val();
-            deptname = $('#deptName').val();
-            testcategoryName = $('#testCategoryName').val();
-            IsNewDepartment = $('#IsNewDepartment').is(':checked');
-            Catgorycode =""
 
-            var obj = {
-                deptId: parseInt(deptid),
-                deptName: deptname,
-                testCategoryName: testcategoryName,
-                IsNewDepartment: IsNewDepartment,
-                testCategoryId: -1,
-                CatgoryCode: Catgorycode
-            };
-            //alert(obj);
-            $.ajax({
-                type: 'POST',
-                url: "@Url.Action("AddTestDepartmentsAndCategories","Admin")",
-                contentType: "application/json; charset-utf-8",
-                data:  {model : obj},
-                dataType: "json"
+    window.onload = function () {
+        $("#testCategoryName").attr("disabled", "disabled");
+        $("#testcategdeptdropdown").attr("disabled", "disabled");
+        $("#subcategSee").attr("disabled", "disabled");
+        $('#testCategoryName').css('border-color', 'red');
+        $('#testcategdeptdropdown').css('border-color', 'red');
+        $('#subcategSee').css('border-color', 'red');
+    };
 
-            });
-    $.ajax({
+    $('#deptId').change(function () {
+
+        deptid = $('#deptId').val();
+        if (deptid == '') {
+
+            $("#testCategoryName").attr("disabled", "disabled");
+            $('#testCategoryName').css('border-color', 'red');
+        }
+        else {
+            $("#testCategoryName").removeAttr("disabled");
+            $('#testCategoryName').css('border-color', '');
+        }
+    });
+
+    $('#testdeptdropdown').change(function () {
+
+        deptid = $('#testdeptdropdown').val();
+        if (deptid == '') {
+
+            $("#testcategdeptdropdown").attr("disabled", "disabled");
+            $('#testcategdeptdropdown').css('border-color', 'red');
+        }
+        else {
+            $("#testcategdeptdropdown").removeAttr("disabled");
+            $('#testcategdeptdropdown').css('border-color', '');
+        }
+    });
+    $('#testdeptdropdown3').change(function () {
+
+        deptid = $('#testdeptdropdown3').val();
+        if (deptid == '') {
+
+            $("#subcategSee").attr("disabled", "disabled");
+            $('#subcategSee').css('border-color', 'red');
+        }
+        else {
+            $("#subcategSee").removeAttr("disabled");
+            $('#subcategSee').css('border-color', '');
+        }
+    });
+
+
+    $('#addDepbtn').click(function () {
+        //alert("check");
+        deptid = $('#deptId').val();
+        deptname = $('#deptName').val();
+        testcategoryName = $('#testCategoryName').val();
+        IsNewDepartment = $('#IsNewDepartment').is(':checked');
+        //Catgorycode =""
+
+        if (deptname == "") {
+            $('#deptname').show();
+            $('#deptname').fadeOut(3000);
+            return false;
+        }        
+             
+
+        var obj = {
+            deptId: deptid,
+            deptName: deptname,
+            testCategoryName: testcategoryName,
+            IsNewDepartment: IsNewDepartment,
+            testCategoryId: -1,
+            //CatgoryCode: Catgorycode
+        };
+        //alert(obj);
+        $.ajax({
+            type: 'POST',
+            url: '/Admin/AddTestDepartmentsAndCategories/',
+            //contentType: "application/json; charset-utf-8",
+            data: obj,
+            dataType: "json",
+            success: function () {
+                $('#myDiv').fadeIn("fast");
+                $('#myDiv').fadeOut(5000);
+            },
+
+        });
+
+    });
+
+    //Adding Tests
+
+    $('#addTestbtn').click(function () {
+        deptid = $('#deptId').val();
+        TestCategoryId = $('#testcategdeptdropdown').val();
+        TestSubcategoryName = $('#testName').val();
+        UpperBound = $('#upperBound').val();
+        LowerBound = $('#lowerBound').val();
+        Unit = $('#unit').val();
+        Rate = $('#rate').val();
+
+        var obj = {
+            deptId: deptid,
+            TestCategoryId: TestCategoryId,
+            TestSubcategoryName: TestSubcategoryName,
+            upperBound: UpperBound,
+            lowerBound: LowerBound,
+            Unit: Unit,
+            Rate: Rate
+        };
+
+        $.ajax({
 
             type: 'POST',
             url: '/Admin/AddTests/',
             data: obj,
             dataType: "json",
 
+            success: function () {
+                $('#myDiv2').fadeIn("fast");
+                $('#myDiv2').fadeOut(5000);
+            },
+
         });
     });
-
 
 
     //For Deleting Tests
 
     $('#testdeptdropdown2').change(function () {
 
-        var vo = $("#testdeptdropdown2").val();
+        var vo = $("#testdeptdropdown2").val() == '' ? -1 : $("#testdeptdropdown2").val();
+
         //alert(vo);
         $.ajax({
             type: 'GET',
@@ -429,10 +516,11 @@
             success: function (data) {
 
                 $('#testHeadDropDown').html('');
-
+                $("#testHeadDropDown").prepend("<option value='-1' selected='selected'>Select Category</option>");
                 for (var i = 0; i < 10; i++) {
                     $('#testHeadDropDown').append($("<option></option>").attr("value", data[i].Id).text(data[i].testName));
                 }
+
             },
             error: function (data) {
                 alert(data);
@@ -444,7 +532,8 @@
 
     $('#testHeadDropDown').change(function () {
 
-        var vo = $("#testHeadDropDown").val();
+        var vo = $("#testHeadDropDown").val() == '' ? -1 : $("#testHeadDropDown").val();
+
         //alert(vo);
         $.ajax({
             type: 'GET',
@@ -454,7 +543,7 @@
             success: function (data) {
 
                 $('#testDropDown').html('');
-
+                $("#testDropDown").prepend("<option value='-1' selected='selected'>Select Category</option>");
                 for (var i = 0; i < 10; i++) {
                     $('#testDropDown').append($("<option></option>").attr("value", data[i].Id).text(data[i].testName));
                 }
@@ -484,7 +573,8 @@
     $('#testdeptdropdown3').change(function () {
 
         var vo = $("#testdeptdropdown3").val();
-        alert(vo);
+        //alert(vo);
+
         $.ajax({
             type: 'GET',
             url: '/Admin/FillDropdown/',
@@ -496,10 +586,9 @@
                 $("#subcategSee").prepend("<option value='-1' selected='selected'>Select Test Category</option>");
                 for (var i = 0; i < data.length; i++) {
                     $('#subcategSee').append($("<option></option>").attr("value", data[i].Id).text(data[i].testName));
-                },
-                error: function (data) {
-                    alert(data);
-            }
+                }
+            },
+            error: function (data) { alert(data); }
         });
     });
 
@@ -531,15 +620,11 @@
 
     //Kendo Grid For Test Viewing
 
-        setInterval(alertFunc, 3000);
-
-
     $('#subcategSee').change(function () {
 
 
-        //('#grid').data('kendoGrid').refresh();
         var vo = $("#subcategSee").val();
-        alert(vo);
+        //alert(vo);
 
 
         $.ajax({
@@ -551,59 +636,65 @@
         });
 
 
-                var crudServiceBaseUrl = "/Admin",
-                  dataSource = new kendo.data.DataSource({
-                      transport: {
-                          read: {
-                              url: crudServiceBaseUrl + "/FillDropdownKendo",
-                              dataType: "json",
 
-                          },
-                          update: {
-                              url: crudServiceBaseUrl + "/UpdateKendoGrid",
-                              dataType: "json",
 
-                          },
-                          destroy: {
-                              url: crudServiceBaseUrl + "/Delete",
-                              dataType: "json",
-                          },
+        var crudServiceBaseUrl = "/Admin",
+                dataSource = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: crudServiceBaseUrl + "/FillDropdownKendo",
+                            dataType: "json",
 
-                          parameterMap: function (options, operation) {
+                        },
+                        update: {
+                            url: crudServiceBaseUrl + "/UpdateKendoGrid",
+                            dataType: "json",
 
-                              if (operation !== "read" && options.models) {
-                                  return { models: kendo.stringify(options.models) };
-                              }
-                          },
-                      },
-    
-                      batch: true,
-                      pageSize: 20,
-                      schema: {
-                          model: {
-                              id: "Id",
-                              fields: {
-                                  testName: { type: "string" },
-                                  upperBound: { type: "double" },
-                                  lowerBound: { type: "double" },
-                                  unit: { type: "string" },
-                                  rate: { type: "double" },
 
-                              }
-                          completed: function () { //alert('COmpleted');
-                          },
-                          requestEnd: function (e) {
-                              //$('#grid').data('kendoGrid').dataSource.read();
-                              $('#grid').data('kendoGrid').refresh();
-                          }
-                      });
+                        },
+                        destroy: {
+                            url: crudServiceBaseUrl + "/Delete",
+                            dataType: "json",
+                        },
+
+                        parameterMap: function (options, operation) {
+
+                            if (operation !== "read" && options.models) {
+                                return { models: kendo.stringify(options.models) };
+                            }
+                        },
+
+                    },
+                    batch: true,
+                    pageSize: 20,
+                    schema: {
+                        model: {
+                            id: "Id",
+                            fields: {
+                                testName: { type: "string" },
+                                upperBound: { type: "double" },
+                                lowerBound: { type: "double" },
+                                unit: { type: "string" },
+                                rate: { type: "double" },
+
+                            }
+                        }
+                    },
+                    completed: function () { //alert('COmpleted');
+                    },
+                    requestEnd: function (e) {
+                        //$('#grid').data('kendoGrid').dataSource.read();
+                        $('#grid').data('kendoGrid').refresh();
+                    },
+
+                });
 
         $("#grid").kendoGrid({
             dataSource: dataSource,
             pageable: true,
             height: 550,
 
-            change: onChange,
+            //change: onChange,
             //toolbar: ["create"],
             columns: [
 
@@ -616,11 +707,9 @@
             ],
             editable: "inline"
         });
+
     });
 
-    function onChange() {
-        alert('aala');
-    }
 
 </script>
 
