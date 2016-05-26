@@ -14,5 +14,6 @@ namespace AsiaLabv1.Services
         {
             _PatientTestService.Insert(Patienttest);
         }
+
     }
 }
