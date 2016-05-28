@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Web.UI.HtmlControls;
 
 namespace AsiaLabv1.Controllers
 {
@@ -23,13 +24,20 @@ namespace AsiaLabv1.Controllers
         #endregion
 
         public static int CategId = 0;
+        public static int DoctorId = 0;
+        public static int EmpId = 0;
 
         public ActionResult Masters()
         {
             return View();
         }
-        
+
         public ActionResult Accounting()
+        {
+            return View();
+        }
+
+        public ActionResult Templates()
         {
             return View();
         }
@@ -101,11 +109,63 @@ namespace AsiaLabv1.Controllers
 
             UserServices.RegisterUser(Employee, EmployeeAddress);
             //jo view call krna hai registration k baad wo view bna kr oska name paramter m yha pass krdena
-            return View();
+            return RedirectToAction("Register", "Admin");
         }
 
+        public ActionResult FillKendoForEmployees(string isFill)
+        {
+            // EmpId = isFill == "none" ? Convert.ToInt16(empid) : EmpId;
+            if (isFill == "" || isFill == null)
+            {
+
+                var subCategories = UserServices.GetAllEmp();
+                var addre = UserServices.GetAddress();
+
+
+                List<UserModel> test = new List<UserModel>();
+                foreach (var item in subCategories.Zip(addre, Tuple.Create))
+                {
+
+                    test.Add(new UserModel
+                    {
+                        Id = item.Item1.Id,
+                        Name = item.Item1.Name,
+                        Gender = item.Item2.Gender.GenderDescription,
+                        UserName = item.Item1.Username,
+                        Email = item.Item2.Email,
+                        UserRole = item.Item2.UserType.TypeDescription,
+                        BranchName = item.Item1.Branch.BranchName,  
+                        
+
+                    });
+                }
+                return Json(test, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UpdateKendoGridEmp(string models)
+        {
+            IList<UserModel> objName = new JavaScriptSerializer().Deserialize<IList<UserModel>>(models);
+            UserEmployee uemp= new UserEmployee();
+            uemp.Id = objName[0].Id;
+            uemp.Username = objName[0].UserName;
+
+            UserServices.Update(uemp,uemp.Id);           
+            return Json(uemp);
+        }
+
+        //public ActionResult DeleteEmp(string models)
+        //{
+        //    IList<ReferredModel> objName = new JavaScriptSerializer().Deserialize<IList<ReferredModel>>(models);
+        //    ReferDoctorsServices.Delete(Convert.ToInt16(objName[0].Id));
+        //    return Json("Record Deleted", JsonRequestBehavior.AllowGet);
+        //}
+
+
         #endregion
-        
+
         #region Test Mangnment
         public ActionResult TestsManagement()
         {
@@ -232,33 +292,33 @@ namespace AsiaLabv1.Controllers
             return Json(null, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult FillDropdownKendo(string isFill,string subCategId)
+        public ActionResult FillDropdownKendo(string isFill, string subCategId)
         {
             CategId = isFill == "none" ? Convert.ToInt16(subCategId) : CategId;
-            if (isFill == "" || isFill==null)
+            if (isFill == "" || isFill == null)
+            {
+
+                var subCategories = TestCategoryServices.GetSubCategById(CategId);
+
+                List<RequiredTest> test = new List<RequiredTest>();
+                foreach (var item in subCategories)
                 {
-
-                    var subCategories = TestCategoryServices.GetSubCategById(CategId);
-
-                    List<RequiredTest> test = new List<RequiredTest>();
-                    foreach (var item in subCategories)
+                    test.Add(new RequiredTest
                     {
-                        test.Add(new RequiredTest
-                        {
 
-                            Id = item.Id,
-                            testName = item.TestSubcategoryName,
-                            upperBound = item.UpperBound,
-                            lowerBound = item.LowerBound,
-                            unit = item.Unit,
-                            rate = item.Rate
+                        Id = item.Id,
+                        testName = item.TestSubcategoryName,
+                        upperBound = item.UpperBound,
+                        lowerBound = item.LowerBound,
+                        unit = item.Unit,
+                        rate = item.Rate
 
-                        });
-                    }
-                    return Json(test, JsonRequestBehavior.AllowGet);
+                    });
                 }
+                return Json(test, JsonRequestBehavior.AllowGet);
+            }
 
-                return Json(null, JsonRequestBehavior.AllowGet);
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult UpdateKendoGrid(string models)
@@ -272,7 +332,7 @@ namespace AsiaLabv1.Controllers
             tsc.Unit = objName[0].unit;
             tsc.Rate = objName[0].rate;
             tsc.TestCategoryId = TestSubCategoryServices.getById(tsc.Id).TestCategoryId;
-            TestSubCategoryServices.Update(tsc,tsc.Id);
+            TestSubCategoryServices.Update(tsc, tsc.Id);
             return Json(tsc);
         }
 
@@ -283,7 +343,7 @@ namespace AsiaLabv1.Controllers
             return Json("Record Deleted", JsonRequestBehavior.AllowGet);
         }
         #endregion
-        
+
         #region Refer Doctor
 
         public ActionResult DoctorReferrals()
@@ -291,7 +351,7 @@ namespace AsiaLabv1.Controllers
             ReferredModel model = new ReferredModel();
             return View(model);
         }
-   
+
         [HttpPost]
         public ActionResult AddReferDoctor(ReferredModel model)
         {
@@ -303,11 +363,62 @@ namespace AsiaLabv1.Controllers
                 Remarks = model.Remarks,
                 commission = model.commission
             });
-            return new JsonResult();            
+            //return new JsonResult(); 
+            return RedirectToAction("DoctorReferrals", "Admin");
+
         }
 
+
+        public ActionResult FillKendoForDoctors(string isFill)
+        {
+            //DoctorId = isFill == "none" ? Convert.ToInt16(DocId) : DoctorId;
+            if (isFill == "" || isFill == null)
+            {
+
+                //var subCategories = TestCategoryServices.GetSubCategById(CategId);
+                var doctors = ReferDoctorsServices.GetAllReferDoctors();
+
+                List<ReferredModel> doc = new List<ReferredModel>();
+                foreach (var item in doctors)
+                {
+                    doc.Add(new ReferredModel
+                    {
+
+                        Id = item.Id,
+                        ReferredDoctorName = item.ReferredDoctorName,
+                        ReferredDocAddress = item.ReferredDocAddress,
+                        ReferredDocNumber = item.ReferredDocNumber,
+                        Remarks = item.Remarks,
+                        commission = item.commission
+
+                    });
+                }
+                return Json(doc, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult UpdateKendoGridDoc(string models)
+        {
+            IList<ReferredModel> objName = new JavaScriptSerializer().Deserialize<IList<ReferredModel>>(models);
+            Refer refDoc = new Refer();
+            refDoc.Id = objName[0].Id;
+            refDoc.ReferredDoctorName = objName[0].ReferredDoctorName;
+            refDoc.ReferredDocAddress = objName[0].ReferredDocAddress;
+            refDoc.ReferredDocNumber = objName[0].ReferredDocNumber;
+            refDoc.Remarks = objName[0].Remarks;
+            refDoc.commission = objName[0].commission;
+            ReferDoctorsServices.Update(refDoc, refDoc.Id);
+            return Json(refDoc);
+        }
+
+        public ActionResult DeleteDoc(string models)
+        {
+            IList<ReferredModel> objName = new JavaScriptSerializer().Deserialize<IList<ReferredModel>>(models);
+            ReferDoctorsServices.Delete(Convert.ToInt16(objName[0].Id));
+            return Json("Record Deleted", JsonRequestBehavior.AllowGet);
+        }
         #endregion
-
-
     }
 }

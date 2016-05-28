@@ -19,5 +19,6 @@ namespace AsiaLabv1
         public double lowerBound { get; set; }
         public string unit { get; set; }
         public double rate { get; set; }
-    }
+    }  
+    
 }

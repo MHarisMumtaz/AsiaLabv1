@@ -80,7 +80,7 @@
                         @Html.LabelFor(model => model.DateofBirth, new { @class = "col-sm-2 control-label" })
 
                         <div class="col-sm-8">
-                            <input type="datetime" id="DateOfBirth" class="form-control1" />
+                            <input type="date" id="DateOfBirth" class="form-control1" />
                         </div>
                         <!--<div class="col-sm-2">
                             <p class="help-block">Your help text!</p>
@@ -90,7 +90,7 @@
                         @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-sm-2 control-label" })
 
                         <div class="col-sm-8">
-                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control1" })
+                            @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control1",type="tel" })
                         </div>
                         <!--<div class="col-sm-2">
                             <p class="help-block">Your help text!</p>
@@ -99,7 +99,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Email, new { @class = "col-sm-2 control-label" })
                         <div class="col-sm-8">
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control1" })
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control1",type="email" })
                         </div>
                       
                     </div>
