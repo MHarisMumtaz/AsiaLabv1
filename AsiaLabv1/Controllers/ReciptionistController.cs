@@ -1,7 +1,13 @@
 ﻿using AsiaLabv1.Models;
 using AsiaLabv1.Services;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,6 +24,7 @@ namespace AsiaLabv1.Controllers
         TestCategoryService TestCategoryServices = new TestCategoryService();
         TestSubCategoryService TestSubCategoryServices = new TestSubCategoryService();
         ReferDoctorsService ReferDoctorsServices = new ReferDoctorsService();
+        PatientPaymentService PatientPaymentServices = new PatientPaymentService();
 
         public ActionResult RegisterPatient()
         {
@@ -51,6 +58,17 @@ namespace AsiaLabv1.Controllers
                     Text = refer.ReferredDoctorName
                 });
             }
+
+            var Paytypes = PatientPaymentServices.GetAllPayTypes();
+            foreach (var Paytype in Paytypes)
+            {
+                model.PayTypes.Add(new SelectListItem
+                {
+                    Value = Paytype.Id.ToString(),
+                    Text = Paytype.Description
+                });
+            }
+
             return View("RegisterPatient", model);
         }
 
@@ -104,6 +122,17 @@ namespace AsiaLabv1.Controllers
         [HttpPost]
         public ActionResult AddPatient(PatientModel model)
         {
+
+            #region temp code this must be removed
+            //PatientPaymentServices.AddPayType(new PayType
+            //{
+            //    Description = "Card"
+            //});
+            //PatientPaymentServices.AddPayType(new PayType
+            //{
+            //    Description = "Cash"
+            //});
+            #endregion
             #region testing code should be delete
             //var model=new PatientModel(){
             //    BranchId=1,
@@ -115,12 +144,14 @@ namespace AsiaLabv1.Controllers
             //    ReferredId=-1
             //};
             #endregion
+
             if (model.PatientTestIds.Count > 0)
             {
                 int UserId = Convert.ToInt32(Session["loginuser"].ToString());
                 model.BranchId = UserServices.GetUserBranch(UserId).Id;
                 PatientServices.Add(model);
 
+                double netAmount = 0;
                 foreach (var TestId in model.PatientTestIds)
                 {
                     PatientTestService.Add(new PatientTest
@@ -128,16 +159,76 @@ namespace AsiaLabv1.Controllers
                         PatientId = model.Id,
                         TestSubcategoryId = TestId
                     });
+                    var test = TestSubCategoryServices.getById(TestId);
+                    netAmount = netAmount + test.Rate;
                 }
-                return Json("Patient Added Successfully!", JsonRequestBehavior.AllowGet);
+
+                if (model.Discount > 0)
+                {
+                    netAmount = netAmount - model.Discount;
+                }
+
+                PatientPaymentServices.Add(new Payment
+                {
+                    PatientId = model.Id,
+                    PatientName = model.Name,
+                    PaidAmount = model.PaidAmount,
+                    Discount = model.Discount,
+                    NetAmount = netAmount,
+                    Balance = model.PaidAmount - netAmount,
+                    PayTypeId = model.PayId
+                });
+
+                GeneratePdf(model);
+
+                return Json("SuccessFully Added Patient", JsonRequestBehavior.AllowGet);
             }
-            return Json("Please assign tests for patients", JsonRequestBehavior.AllowGet);
+            return Json("Please assign tests to patients", JsonRequestBehavior.AllowGet);
             
         }
 
-        public ActionResult PrintReport()
+        [NonAction]
+        public void GeneratePdf(PatientModel model)
         {
-            return View();
+            var path = Server.MapPath("/images/");
+            // Create a invoice form with the sample invoice data
+            PatientRecipt patient = new PatientRecipt(path, model);
+
+            // Create a MigraDoc document
+            Document document = patient.CreateDocument();
+            document.UseCmykColor = true;
+
+
+            // Create a renderer for PDF that uses Unicode font encoding
+            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Patient-"+model.Id+".pdf";
+            //#if DEBUG
+            //    // I don't want to close the document constantly...
+            //    filename = "Patient-" + Guid.NewGuid().ToString("N").ToUpper() + ".pdf";
+            //#endif
+
+            pdfRenderer.Save(Server.MapPath("/PatientsReport/") + filename);
+            // ...and start a viewer.
+            Process.Start(Server.MapPath("/PatientsReport/") + filename);
+
+
+           // PdfDocument pdf = new PdfDocument();
+           // PdfPage pdfPage = pdf.AddPage();
+           // XGraphics graph = XGraphics.FromPdfPage(pdfPage);
+           // XFont font = new XFont("Verdana", 20, XFontStyle.Bold);
+           //// graph.DrawRectangle(XBrushes.BlueViolet, new RectangleF(0, 0, 100, 50));
+           // graph.DrawString("This is my first PDF document", font, XBrushes.Black,
+           // new XRect(0, 0, pdfPage.Width.Point, pdfPage.Height.Point), XStringFormats.Center);
+           // pdf.Save("firstpage.pdf");
+            
         }
 
        
