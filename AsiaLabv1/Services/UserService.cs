@@ -17,6 +17,33 @@ namespace AsiaLabv1.Services
         Repository<Branch> Branches = new Repository<Branch>();
         Repository<Gender> Genders = new Repository<Gender>();
 
+
+        public List<UserEmployee> GetAllEmployees()
+        {
+            return UserEmp.GetAll();
+        }
+
+        public List<Address> GetAddress()
+        {
+            return UserAddresses.GetAll();
+        }
+
+        public void Update(UserEmployee Emp, int id)
+        {
+            UserEmp.Update(Emp, id);
+        }
+
+
+        public List<UserEmployee> GetAllEmp()
+        {
+            var Query = (from user in UserEmp.Table
+                         join branch in Branches.Table on user.BranchId equals branch.Id
+                         join addr in UserAddresses.Table on user.Id equals addr.UserEmployeeId
+                         join usertype in UserTypes.Table on addr.UserTypeId equals usertype.Id
+                         select user).ToList<UserEmployee>();  
+            return Query;
+        }             
+       
         public UserModel ValidateLogin(string UserName, string Password)
         {
             var Query = (from user in UserEmp.Table
@@ -25,12 +52,14 @@ namespace AsiaLabv1.Services
                          join usertype in UserTypes.Table on addr.UserTypeId equals usertype.Id
                          where (user.Username == UserName && user.Password == Password)
                          select new
-                         {
+                         {                             
                              UserId = user.Id,
                              UserName = user.Name,
                              BranchName = branch.BranchName,
                              BranchAddress = branch.BranchAddress,
                              UserRole = usertype.TypeDescription
+                             
+                             
                          }).FirstOrDefault();
             var model = new UserModel();
             if (Query != null)

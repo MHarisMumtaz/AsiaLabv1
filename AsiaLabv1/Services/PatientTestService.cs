@@ -8,7 +8,7 @@ namespace AsiaLabv1.Services
 {
     public class PatientTestService
     {
-        Repository<PatientTest> _PatientTestService = new Repository<PatientTest>();
+        Repository<PatientTest> _PatientTestRepository = new Repository<PatientTest>();
         Repository<TestSubcategory> _TestSubCategoryRepository = new Repository<TestSubcategory>();
         Repository<Patient> _PatientRepository = new Repository<Patient>();
         Repository<PatientTestResult> _PatientTestResultRepository= new Repository<PatientTestResult>();
@@ -16,8 +16,9 @@ namespace AsiaLabv1.Services
 
         public void Add(PatientTest Patienttest)
         {
-            _PatientTestService.Insert(Patienttest);
+            _PatientTestRepository.Insert(Patienttest);
         }
+<<<<<<< HEAD
         public List<Patient> GetPatientTests()
         {
             //var query = (from pt in _PatientTestService.Table
@@ -57,6 +58,13 @@ namespace AsiaLabv1.Services
                          where pt.PatientId == id
                          select pt).ToList<PatientTest>();
 
+=======
+        
+        public List<PatientTest> GetPatientTests()
+        {
+            var query = _PatientTestRepository.GetAll();
+             
+>>>>>>> f49991fb2731d99d6f3448f6a14097e69ba5afd2
             return query;
         }
 

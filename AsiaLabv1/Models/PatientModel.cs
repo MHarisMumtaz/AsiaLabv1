@@ -40,8 +40,19 @@ namespace AsiaLabv1.Models
         public int DeptId { get; set; }
         public List<SelectListItem> Departments { get; set; }
 
+        public int PayId { get; set; }
+        public List<SelectListItem> PayTypes { get; set; }
+
+
+        [Display(Name="Discount")]
+        public double Discount { get; set; }
+
+        [Display(Name="Paid Amount")]
+        public double PaidAmount { get; set; }
+
         public PatientModel()
         {
+            this.PayTypes = new List<SelectListItem>();
             this.PatientTestIds = new List<int>();
             this.ReferredDoctors = new List<SelectListItem>();
             this.Genders = new List<SelectListItem>();
