@@ -20,4 +20,20 @@ namespace AsiaLabv1
         public string unit { get; set; }
         public double rate { get; set; }
     }
+
+    public class RequiredPatient
+    {
+        public int Id { get; set; }
+        public string PatientNumber { get; set; }
+        public string PatientName{get;set;}
+
+    }
+
+    public class RequiredTechnicianItems
+    {
+        public string PatientNumber { get; set; }
+        public string PatientName { get; set; }
+
+        public List<RequiredTest> PatientTests { get; set; }
+    }
 }
