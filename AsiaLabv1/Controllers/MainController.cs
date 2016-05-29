@@ -1,4 +1,5 @@
-﻿using AsiaLabv1.Services;
+﻿using AsiaLabv1.Models;
+using AsiaLabv1.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,10 +83,19 @@ namespace AsiaLabv1.Controllers
 
             var model = UsersService.ValidateLogin(username, password);
 
+            if (model==null)
+            {
+                return RedirectToAction("LoginPage", "Main");
+
+            }
+            
+
             if (model != null)
             {
                 Session["loginuser"] = model.Id;
                 Session["loginusername"] = model.Name;
+                Session["name"] = model.Name;
+                Session["role"] = model.UserRole;
 
                 if (model.Name == "Humam admin")
                 {

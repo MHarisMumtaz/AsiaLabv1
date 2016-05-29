@@ -20,6 +20,7 @@ namespace AsiaLabv1.Models
         public string Qualification { get; set; }
         public string AddressDetails { get; set; }
         public string CNIC { get; set; }
+        public string Gender { get; set; }
 
         public int GenderId { get; set; }
         public List<SelectListItem> Genders { get; set; }

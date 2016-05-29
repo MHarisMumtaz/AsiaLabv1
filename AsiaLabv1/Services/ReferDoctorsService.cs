@@ -26,5 +26,14 @@ namespace AsiaLabv1.Services
             return _ReferRepository.GetById(Id);
         }
 
+        public void Update(Refer Doc, int id)
+        {
+            _ReferRepository.Update(Doc, id);
+        }
+
+        public void Delete(int Doc)
+        {
+            _ReferRepository.DeleteById(Doc);
+        }
     }
 }
