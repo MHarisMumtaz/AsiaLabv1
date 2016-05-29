@@ -18,5 +18,10 @@ namespace AsiaLabv1.Services
         {
             Genders.Insert(Gender);
         }
+
+        public Gender GetById(int Id)
+        {
+            return Genders.GetById(Id);
+        }
     }
 }

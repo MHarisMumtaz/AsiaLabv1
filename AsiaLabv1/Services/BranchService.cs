@@ -42,5 +42,13 @@ namespace AsiaLabv1.Services
         {
             return Branches.GetById(Id);
         }
+
+        public Contact GetBranchContact(int BranchId)
+        {
+            var Query = (from contact in BranchesContacts.Table
+                         where contact.BranchId == BranchId
+                         select contact).FirstOrDefault();
+            return Query;
+        }
     }
 }

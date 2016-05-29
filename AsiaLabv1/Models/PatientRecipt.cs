@@ -69,16 +69,24 @@ namespace AsiaLabv1.Models
         /// <summary>
         /// The table of the MigraDoc document that contains the invoice items.
         /// </summary>
+
+        double NetAmount;
         Table table;
         PatientModel model;
+        List<TestSubcategory> PatientTests;
+        Branch Branch;
+        Contact BranchContact;
         string path;
         /// <summary>
         /// Initializes a new instance of the class BillFrom and opens the specified XML document.
         /// </summary>
-        public PatientRecipt(string path,PatientModel model)
+        public PatientRecipt(string path, PatientModel model, List<TestSubcategory> PatientTests,Branch branch,Contact branchcontact)
         {
             this.model = model;
             this.path = path;
+            this.Branch = branch;
+            this.BranchContact = branchcontact;
+            this.PatientTests = PatientTests;
            // this.invoice = new XmlDocument();
             //this.invoice.Load(filename);
            // this.navigator = this.invoice.CreateNavigator();
@@ -109,11 +117,15 @@ namespace AsiaLabv1.Models
         /// </summary>
         void DefineStyles()
         {
+
             // Get the predefined style Normal.
+            
             Style style = this.document.Styles["Normal"];
+            
             // Because all styles are derived from Normal, the next line changes the 
             // font of the whole document. Or, more exactly, it changes the font of
             // all styles and paragraphs that do not redefine the font.
+            
             style.Font.Name = "Verdana";
 
             style = this.document.Styles[StyleNames.Header];
@@ -144,18 +156,18 @@ namespace AsiaLabv1.Models
             Section section = this.document.AddSection();
 
             // Put a logo in the header
-            Image image = section.Headers.Primary.AddImage(path + "Logo.jpg");
+            Image image = section.AddParagraph().AddImage(path + "Logo.jpg");
             image.Height = "2.5cm";
             image.LockAspectRatio = true;
-            image.RelativeVertical = RelativeVertical.Line;
-            image.RelativeHorizontal = RelativeHorizontal.Margin;
+           /// image.RelativeVertical = RelativeVertical.Line;
+          ///  image.RelativeHorizontal = RelativeHorizontal.Margin;
             image.Top = ShapePosition.Top;
             image.Left = ShapePosition.Center;
             image.WrapFormat.Style = WrapStyle.Through;
 
             //// Create footer
             Paragraph paragraph = section.Footers.Primary.AddParagraph();
-            paragraph.AddText("Powerd By: Hext.com");
+            paragraph.AddText("Powerd By: UpperBound Technologies");
             paragraph.Format.Font.Size = 9;
             paragraph.Format.Alignment = ParagraphAlignment.Center;
 
@@ -178,9 +190,9 @@ namespace AsiaLabv1.Models
             paragraph = section.AddParagraph();
             paragraph.Format.SpaceBefore = "8cm";
             paragraph.Style = "Reference";
-            paragraph.AddFormattedText("INVOICE", TextFormat.Bold);
+          //  paragraph.AddFormattedText("INVOICE", TextFormat.Bold);
             paragraph.AddTab();
-            paragraph.AddText("Cologne, ");
+            paragraph.AddText("Date:");
             paragraph.AddDateField("dd.MM.yyyy");
 
             // Create the item table
@@ -202,6 +214,7 @@ namespace AsiaLabv1.Models
             column = this.table.AddColumn("3cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
+
             column = this.table.AddColumn("3.5cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
@@ -217,33 +230,88 @@ namespace AsiaLabv1.Models
             row.Format.Alignment = ParagraphAlignment.Center;
             row.Format.Font.Bold = true;
             row.Shading.Color = TableBlue;
-            row.Cells[0].AddParagraph("Item");
+            row.Cells[0].AddParagraph("Patient# ");
             row.Cells[0].Format.Font.Bold = false;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
             row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-            row.Cells[0].MergeDown = 1;
-            row.Cells[1].AddParagraph("Title and Author");
-            row.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[1].MergeRight = 3;
-            row.Cells[5].AddParagraph("Extended Price");
-            row.Cells[5].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[5].VerticalAlignment = VerticalAlignment.Bottom;
-            row.Cells[5].MergeDown = 1;
+            row.Cells[0].MergeRight = 3;
+            row.Cells[4].AddParagraph(model.Id.ToString());
+            row.Cells[4].Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[4].MergeRight = 1;
+           // row.Cells[5].AddParagraph("Extended Price");
+            //row.Cells[5].Format.Alignment = ParagraphAlignment.Left;
+           // row.Cells[5].VerticalAlignment = VerticalAlignment.Bottom;
+           // row.Cells[5].MergeDown = 1;
 
             row = table.AddRow();
             row.HeadingFormat = true;
             row.Format.Alignment = ParagraphAlignment.Center;
-            row.Format.Font.Bold = true;
+            row.Format.Font.Bold = false;
             row.Shading.Color = TableBlue;
-            row.Cells[1].AddParagraph("Quantity");
+            row.Cells[0].AddParagraph("Patient Name:");
+            row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[1].AddParagraph(model.Name);
             row.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[2].AddParagraph("Unit Price");
+            row.Cells[2].AddParagraph("Date of birth:");
             row.Cells[2].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[3].AddParagraph("Discount (%)");
+            row.Cells[3].AddParagraph(model.DateofBirth.ToShortDateString());
             row.Cells[3].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[4].AddParagraph("Taxable");
+            row.Cells[4].AddParagraph("Sex:");
             row.Cells[4].Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[5].AddParagraph(model.Genders[0].Text);
+            row.Cells[5].Format.Alignment = ParagraphAlignment.Left;
 
+
+            row = table.AddRow();
+            row.HeadingFormat = true;
+            row.Format.Alignment = ParagraphAlignment.Center;
+            row.Format.Font.Bold = false;
+            row.Shading.Color = TableBlue;
+            row.Cells[0].AddParagraph("Referred By:");
+            row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[0].MergeRight = 2;
+            row.Cells[3].AddParagraph(model.ReferredDoctors[0].Text);
+            row.Cells[3].MergeRight = 2;
+
+
+            row = table.AddRow();
+            row.HeadingFormat = true;
+            row.Format.Alignment = ParagraphAlignment.Center;
+            row.Format.Font.Bold = false;
+            row.Shading.Color = TableBlue;
+            row.Cells[0].AddParagraph("Phone Number:");
+            row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[0].MergeRight = 1;
+            row.Cells[2].AddParagraph(model.PhoneNumber);
+            row.Cells[2].Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[3].AddParagraph("Email:");
+            row.Cells[3].Format.Alignment = ParagraphAlignment.Left;
+            row.Cells[3].MergeRight = 1;
+            row.Cells[5].AddParagraph(model.Email);
+            row.Cells[5].Format.Alignment = ParagraphAlignment.Left;
+
+            foreach (var test in PatientTests)
+            {
+                
+                row = table.AddRow();
+                row.HeadingFormat = true;
+                row.Format.Alignment = ParagraphAlignment.Center;
+                row.Format.Font.Bold = false;
+                row.Shading.Color = TableBlue;
+                row.Cells[0].AddParagraph("Test Name:");
+                row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+                row.Cells[0].MergeRight = 1;
+                row.Cells[2].AddParagraph(test.TestSubcategoryName);
+                row.Cells[2].Format.Alignment = ParagraphAlignment.Left;
+                row.Cells[3].AddParagraph("Rate:");
+                row.Cells[3].Format.Alignment = ParagraphAlignment.Left;
+                row.Cells[3].MergeRight = 1;
+                row.Cells[5].AddParagraph(test.Rate.ToString());
+                row.Cells[5].Format.Alignment = ParagraphAlignment.Left;
+                
+                NetAmount = NetAmount + test.Rate;
+
+            }
             this.table.SetEdge(0, 0, 6, 2, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
         }
 
@@ -254,12 +322,12 @@ namespace AsiaLabv1.Models
         {
             // Fill address in address text frame
            // XPathNavigator item = SelectItem("/invoice/to");
-            Paragraph paragraph = this.addressFrame.AddParagraph();
-            paragraph.AddText("my address");
-            paragraph.AddLineBreak();
-            paragraph.AddText("L 3/9 sector 15 A");
-            paragraph.AddLineBreak();
-            paragraph.AddText("78600" + " " + ", karachi");
+            //Paragraph paragraph = this.addressFrame.AddParagraph();
+            //paragraph.AddText("my address");
+            //paragraph.AddLineBreak();
+            //paragraph.AddText("L 3/9 sector 15 A");
+            //paragraph.AddLineBreak();
+            //paragraph.AddText("78600" + " " + ", karachi");
 
             // Iterate the invoice items
            // double totalExtendedPrice = 0;
@@ -272,35 +340,35 @@ namespace AsiaLabv1.Models
                 //double discount = GetValueAsDouble(item, "discount");
 
                 // Each item fills two rows
-                Row row1 = this.table.AddRow();
-                Row row2 = this.table.AddRow();
-                row1.TopPadding = 1.5;
-                row1.Cells[0].Shading.Color = TableGray;
-                row1.Cells[0].VerticalAlignment = VerticalAlignment.Center;
-                row1.Cells[0].MergeDown = 1;
-                row1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                row1.Cells[1].MergeRight = 3;
-                row1.Cells[5].Shading.Color = TableGray;
-                row1.Cells[5].MergeDown = 1;
+            //    Row row1 = this.table.AddRow();
+            //    Row row2 = this.table.AddRow();
+            //    row1.TopPadding = 1.5;
+            //    row1.Cells[0].Shading.Color = TableGray;
+            //    row1.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+            //    row1.Cells[0].MergeDown = 1;
+            //    row1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+            //    row1.Cells[1].MergeRight = 3;
+            //    row1.Cells[5].Shading.Color = TableGray;
+            //    row1.Cells[5].MergeDown = 1;
 
-                row1.Cells[0].AddParagraph("Row1");
-                paragraph = row1.Cells[1].AddParagraph();
-                paragraph.AddFormattedText("Row1 Title", TextFormat.Bold);
-                paragraph.AddFormattedText(" by ", TextFormat.Italic);
-                paragraph.AddText("author");
-                row2.Cells[1].AddParagraph("quantity 12");
-                row2.Cells[2].AddParagraph("12000 €");
-                row2.Cells[3].AddParagraph("discount 0.0");
-                row2.Cells[4].AddParagraph();
-                row2.Cells[5].AddParagraph("price 0.00");
-                //double extendedPrice = quantity * price;
-                //extendedPrice = extendedPrice * (100 - discount) / 100;
-                row1.Cells[5].AddParagraph("extend price 0.00" + " €");
-                row1.Cells[5].VerticalAlignment = VerticalAlignment.Bottom;
-              //  totalExtendedPrice += extendedPrice;
+            //    row1.Cells[0].AddParagraph("Row1");
+            //    paragraph = row1.Cells[1].AddParagraph();
+            //    paragraph.AddFormattedText("Row1 Title", TextFormat.Bold);
+            //    paragraph.AddFormattedText(" by ", TextFormat.Italic);
+            //    paragraph.AddText("author");
+            //    row2.Cells[1].AddParagraph("quantity 12");
+            //    row2.Cells[2].AddParagraph("12000 €");
+            //    row2.Cells[3].AddParagraph("discount 0.0");
+            //    row2.Cells[4].AddParagraph();
+            //    row2.Cells[5].AddParagraph("price 0.00");
+            //    //double extendedPrice = quantity * price;
+            //    //extendedPrice = extendedPrice * (100 - discount) / 100;
+            //    row1.Cells[5].AddParagraph("extend price 0.00" + " €");
+            //    row1.Cells[5].VerticalAlignment = VerticalAlignment.Bottom;
+            //  //  totalExtendedPrice += extendedPrice;
 
-                this.table.SetEdge(0, this.table.Rows.Count - 2, 6, 2, Edge.Box, BorderStyle.Single, 0.75);
-            //}
+            //    this.table.SetEdge(0, this.table.Rows.Count - 2, 6, 2, Edge.Box, BorderStyle.Single, 0.75);
+            ////}
 
             // Add an invisible row as a space line to the table
             Row row = this.table.AddRow();
@@ -309,52 +377,52 @@ namespace AsiaLabv1.Models
             // Add the total price row
             row = this.table.AddRow();
             row.Cells[0].Borders.Visible = false;
-            row.Cells[0].AddParagraph("Total Price");
+            row.Cells[0].AddParagraph("Net Amount");
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 4;
-            row.Cells[5].AddParagraph("extend price 40.00" + " €");
+            row.Cells[5].AddParagraph(NetAmount.ToString() + " Rs");
 
             // Add the VAT row
             row = this.table.AddRow();
             row.Cells[0].Borders.Visible = false;
-            row.Cells[0].AddParagraph("VAT (19%)");
+            row.Cells[0].AddParagraph("Discount");
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 4;
-            row.Cells[5].AddParagraph("extend price 45.00" + " €");
+            row.Cells[5].AddParagraph(model.Discount.ToString());
 
             // Add the additional fee row
             row = this.table.AddRow();
             row.Cells[0].Borders.Visible = false;
-            row.Cells[0].AddParagraph("Shipping and Handling");
-            row.Cells[5].AddParagraph(0.ToString("0.00") + " €");
+            row.Cells[0].AddParagraph("Paid Amount");
+            row.Cells[5].AddParagraph(model.PaidAmount + " Rs");
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 4;
 
             // Add the total due row
             row = this.table.AddRow();
-            row.Cells[0].AddParagraph("Total Due");
+            row.Cells[0].AddParagraph("Total Amount");
             row.Cells[0].Borders.Visible = false;
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 4;
           //  totalExtendedPrice += 0.19 * totalExtendedPrice;
-            row.Cells[5].AddParagraph("extend price 55.00" + " €");
+            row.Cells[5].AddParagraph((NetAmount - model.Discount) + " Rs");
 
             // Set the borders of the specified cell range
             this.table.SetEdge(5, this.table.Rows.Count - 4, 1, 4, Edge.Box, BorderStyle.Single, 0.75);
 
-            // Add the notes paragraph
-            paragraph = this.document.LastSection.AddParagraph();
-            paragraph.Format.SpaceBefore = "1cm";
-            paragraph.Format.Borders.Width = 0.75;
-            paragraph.Format.Borders.Distance = 3;
-            paragraph.Format.Borders.Color = TableBorder;
-            paragraph.Format.Shading.Color = TableGray;
-          //  item = SelectItem("/invoice");
-            paragraph.AddText("Notes");
+          //  // Add the notes paragraph
+          //  paragraph = this.document.LastSection.AddParagraph();
+          //  paragraph.Format.SpaceBefore = "1cm";
+          //  paragraph.Format.Borders.Width = 0.75;
+          //  paragraph.Format.Borders.Distance = 3;
+          //  paragraph.Format.Borders.Color = TableBorder;
+          //  paragraph.Format.Shading.Color = TableGray;
+          ////  item = SelectItem("/invoice");
+          //  paragraph.AddText("Notes");
         }
 
         /// <summary>

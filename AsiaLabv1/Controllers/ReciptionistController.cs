@@ -25,6 +25,7 @@ namespace AsiaLabv1.Controllers
         TestSubCategoryService TestSubCategoryServices = new TestSubCategoryService();
         ReferDoctorsService ReferDoctorsServices = new ReferDoctorsService();
         PatientPaymentService PatientPaymentServices = new PatientPaymentService();
+        BranchService BranchServices = new BranchService();
 
         public ActionResult RegisterPatient()
         {
@@ -148,9 +149,10 @@ namespace AsiaLabv1.Controllers
             if (model.PatientTestIds.Count > 0)
             {
                 int UserId = Convert.ToInt32(Session["loginuser"].ToString());
-                model.BranchId = UserServices.GetUserBranch(UserId).Id;
+                var branch = UserServices.GetUserBranch(UserId);
+                model.BranchId = branch.Id;
                 PatientServices.Add(model);
-
+                List<TestSubcategory> selectedTests = new List<TestSubcategory>();
                 double netAmount = 0;
                 foreach (var TestId in model.PatientTestIds)
                 {
@@ -160,9 +162,10 @@ namespace AsiaLabv1.Controllers
                         TestSubcategoryId = TestId
                     });
                     var test = TestSubCategoryServices.getById(TestId);
+                    selectedTests.Add(test);
                     netAmount = netAmount + test.Rate;
                 }
-
+               
                 if (model.Discount > 0)
                 {
                     netAmount = netAmount - model.Discount;
@@ -178,8 +181,22 @@ namespace AsiaLabv1.Controllers
                     Balance = model.PaidAmount - netAmount,
                     PayTypeId = model.PayId
                 });
-
-                GeneratePdf(model);
+                
+                var gender = GenderServices.GetById(model.GenderId);
+                
+                model.Genders.Add(new SelectListItem
+                {
+                    Text = gender.GenderDescription
+                });
+                
+                var referdoctor = ReferDoctorsServices.GetReferDoctorById(model.ReferredId);
+                
+                model.ReferredDoctors.Add(new SelectListItem
+                {
+                    Text = referdoctor.ReferredDoctorName
+                });
+                var branchContact = BranchServices.GetBranchContact(branch.Id);
+                GeneratePdf(model, selectedTests,branch,branchContact);
 
                 return Json("SuccessFully Added Patient", JsonRequestBehavior.AllowGet);
             }
@@ -188,11 +205,11 @@ namespace AsiaLabv1.Controllers
         }
 
         [NonAction]
-        public void GeneratePdf(PatientModel model)
+        public void GeneratePdf(PatientModel model,List<TestSubcategory> tests,Branch branch,Contact branchcontact)
         {
             var path = Server.MapPath("/images/");
             // Create a invoice form with the sample invoice data
-            PatientRecipt patient = new PatientRecipt(path, model);
+            PatientRecipt patient = new PatientRecipt(path, model, tests,branch,branchcontact);
 
             // Create a MigraDoc document
             Document document = patient.CreateDocument();
